@@ -90,11 +90,14 @@ func getList(fn string) []string {
 
 	res := strings.Split(string(data), "\n")
 
-	if len(res[len(res)-1]) == 0 {
-		res = res[:len(res)-1]
+	var resF []string
+	for _, v := range res {
+		if len(v) != 0 {
+			resF = append(resF, v)
+		}
 	}
 
-	return res
+	return resF
 }
 
 func hasString(ss []string, s string) bool {
