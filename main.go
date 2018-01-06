@@ -5,8 +5,10 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"math/rand"
 	"net/url"
 	"strings"
+	"time"
 
 	a "github.com/ChimeraCoder/anaconda"
 )
@@ -54,6 +56,10 @@ func main() {
 		// 	fmt.Println(fav.Text)
 		// }
 	}
+func random(min, max int) int {
+	source := rand.NewSource(time.Now().UnixNano())
+	r := rand.New(source)
+	return r.Intn(max+1) + min
 }
 
 func filter(t []a.Tweet) []a.Tweet {
