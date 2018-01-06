@@ -41,21 +41,26 @@ func main() {
 		"count": {"200"},
 	}
 
-	timeline, _ := api.GetHomeTimeline(options)
+	for {
+		timeline, _ := api.GetHomeTimeline(options)
 
-	timeline = filter(timeline)
-	fmt.Println(len(timeline))
-	for i, tweet := range timeline {
-		fmt.Printf("====== %v =======\n", i)
-		fmt.Println(tweet.User.Name)
-		fmt.Println(tweet.Text)
-		fmt.Println(tweet.Favorited)
-		// if i%6 == 0 {
-		//  // Like the tweet
-		// 	fav, _ := api.Favorite(tweet.Id)
-		// 	fmt.Println(fav.Text)
-		// }
+		timeline = filter(timeline)
+
+		// Add some randomness
+		r := random(2, 3)
+		for i, tweet := range timeline {
+			if i%r == 0 {
+				_, err := api.Favorite(tweet.Id)
+				if err != nil {
+					fmt.Println("Error", err)
+				}
+			}
+		}
+		time.Sleep(15 * time.Minute)
 	}
+
+}
+
 func random(min, max int) int {
 	source := rand.NewSource(time.Now().UnixNano())
 	r := rand.New(source)
