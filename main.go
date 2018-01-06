@@ -64,9 +64,9 @@ func random(min, max int) int {
 
 func filter(t []a.Tweet) []a.Tweet {
 	// Words, tags etc. to follow
-	tags := []string{"#100DaysOfCode"}
-	// Users not to follow
-	xUser := []string{"jetrubyagency"}
+	tags := getList("tags.txt")
+	// Users to filter out
+	xUser := getList("exclude.txt")
 
 	filtered := []a.Tweet{}
 	for _, v := range t {
@@ -75,6 +75,21 @@ func filter(t []a.Tweet) []a.Tweet {
 		}
 	}
 	return filtered
+}
+
+func getList(fn string) []string {
+	data, err := ioutil.ReadFile(fn)
+	if err != nil {
+		return []string{}
+	}
+
+	res := strings.Split(string(data), "\n")
+
+	if len(res[len(res)-1]) == 0 {
+		res = res[:len(res)-1]
+	}
+
+	return res
 }
 
 func hasString(ss []string, s string) bool {
