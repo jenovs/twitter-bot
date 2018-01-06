@@ -70,12 +70,17 @@ func random(min, max int) int {
 func filter(t []a.Tweet) []a.Tweet {
 	// Words, tags etc. to follow
 	tags := getList("tags.txt")
+	// Words, tags etc. to filter out
+	xTags := getList("tags-exclude.txt")
 	// Users to filter out
 	xUser := getList("exclude.txt")
 
 	filtered := []a.Tweet{}
 	for _, v := range t {
-		if hasString(tags, v.Text) && !hasString(xUser, v.User.Name) && len(strings.Split(v.Text, "#")) <= 5 && !v.Favorited {
+		if hasString(tags, v.Text) &&
+			!hasString(xTags, v.Text) &&
+			!hasString(xUser, v.User.Name) &&
+			len(strings.Split(v.Text, "#")) <= 5 && !v.Favorited {
 			filtered = append(filtered, v)
 		}
 	}
