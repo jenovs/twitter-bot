@@ -79,7 +79,7 @@ func filter(t []a.Tweet) []a.Tweet {
 	for _, v := range t {
 		if hasString(tags, v.Text) &&
 			!hasString(xTags, v.Text) &&
-			!hasString(xUser, v.User.Name) &&
+			!hasString(xUser, v.User.ScreenName) &&
 			len(strings.Split(v.Text, "#")) <= 5 && !v.Favorited {
 			filtered = append(filtered, v)
 		}
